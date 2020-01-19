@@ -1,12 +1,30 @@
 package global.coda.hms.exception;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import global.coda.hms.constant.ApplicationConstant;
+
 /**
  * class for System Exception.
  *
- * @author Chnadraleka
+ * @author Chandraleka
  *
  */
+@ControllerAdvice
 public class SystemException extends Exception {
+
+  /**
+   * method to show exception message.
+   *
+   * @param exception to show
+   * @return response to the client
+   */
+  @ExceptionHandler
+  public ResponseEntity<Object> exception(BusinessException exception) {
+    return ResponseEntity.status(ApplicationConstant.NUMBER404).body("Sorry!\nSomething went Wrong!");
+  }
 
   /**
    * serial version ID.

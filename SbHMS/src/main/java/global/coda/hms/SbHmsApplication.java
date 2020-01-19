@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Chandraleka
  *
  */
-@SpringBootApplication
-@MapperScan("global.coda.hms.mapper")
+@ SpringBootApplication
+@ MapperScan("global.coda.hms.mapper")
 public class SbHmsApplication {
 
   /**
