@@ -1,6 +1,7 @@
 package global.coda.hms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -70,12 +71,12 @@ public class DoctorService {
    * @throws SystemException   when there is any exception with system
    * @throws BusinessException when there is any user mistake with input values
    */
-  public Doctor getDoctor(int userId) throws SystemException, BusinessException {
+  public List<Doctor> getDoctor(int userId) throws SystemException, BusinessException {
     LOGGER.traceEntry(String.valueOf(userId));
-    Doctor doctorData = null;
+    List<Doctor> doctorData = null;
     try {
       doctorData = mapper.getDoctor(userId);
-      if (doctorData != null && doctorData.getUserId() != 0) {
+      if (doctorData != null) {
         LOGGER.traceExit(doctorData.toString());
         return doctorData;
 
@@ -206,14 +207,14 @@ public class DoctorService {
    * @throws SystemException   when there is any exception with system
    * @throws BusinessException when there is any user mistake with input values
    */
-  public List<Doctor> getAllPatientsUnderAllDoctors() throws SystemException, BusinessException {
+  public Map<Integer, Doctor> getAllPatientsUnderAllDoctors() throws SystemException, BusinessException {
     LOGGER.traceEntry("Getting all patients under all doctors");
-    List<Doctor> doctorList = null;
+    Map<Integer, Doctor> doctorMap = null;
     try {
-      doctorList = mapper.getAllPatientsUnderAllDoctors();
-      if (doctorList != null && !doctorList.isEmpty()) {
-        LOGGER.traceExit(doctorList.toString());
-        return doctorList;
+      doctorMap = mapper.getAllPatientsUnderAllDoctors();
+      if (doctorMap != null && !doctorMap.isEmpty()) {
+        LOGGER.traceExit(doctorMap.toString());
+        return doctorMap;
       } else {
         throw new SystemException("Error while getting all patient details for all doctors");
       }

@@ -1,6 +1,7 @@
 package global.coda.hms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import global.coda.hms.exception.BusinessException;
 import global.coda.hms.exception.SystemException;
-import global.coda.hms.mapper.DoctorMapper;
 import global.coda.hms.model.Doctor;
 import global.coda.hms.model.Patient;
 import global.coda.hms.service.DoctorService;
@@ -30,7 +30,7 @@ import global.coda.hms.service.DoctorService;
 public class DoctorController {
   private static final Logger LOGGER = LogManager.getLogger(PatientController.class);
 
-  private DoctorMapper mapper;
+  //private DoctorMapper mapper;
 
   private DoctorService service;
 
@@ -43,6 +43,10 @@ public class DoctorController {
     this.service = service;
   }
 
+  //  public DoctorController(DoctorMapper mapper) {
+  //    this.mapper = mapper;
+  //  }
+
   /**
    * method for getting all Doctor details.
    *
@@ -50,7 +54,7 @@ public class DoctorController {
    * @throws SystemException   when there is any exception with system
    * @throws BusinessException when there is any user mistake with input values
    */
-  @ GetMapping("/allDoctors")
+  @ GetMapping("/readAllDoctors")
   public ResponseEntity<List<Doctor>> getAll() throws SystemException, BusinessException {
     LOGGER.traceEntry("Getting All Doctor Details");
     List<Doctor> listDoctor = service.getAllDoctors();
@@ -67,11 +71,11 @@ public class DoctorController {
    * @throws SystemException   when there is any exception with system
    * @throws BusinessException when there is any user mistake with input values
    */
-  @ GetMapping("/readDoctor/{userId}")
-  public ResponseEntity<Doctor> getById(@ PathVariable int userId)
+  @ GetMapping("/readDoctors/{userId}")
+  public ResponseEntity<List<Doctor>> getById(@ PathVariable int userId)
       throws SystemException, BusinessException {
     LOGGER.traceEntry(String.valueOf(userId));
-    Doctor doctor = service.getDoctor(userId);
+    List<Doctor> doctor = service.getDoctor(userId);
     LOGGER.traceExit(doctor.toString());
     return ResponseEntity.status(HttpStatus.OK).body(doctor);
   }
@@ -156,12 +160,18 @@ public class DoctorController {
    * @throws BusinessException when there is any user mistake with input values
    */
   @ GetMapping("/patientsUnderAllDoctors")
-  public ResponseEntity<List<Doctor>> getAllPatientsUnderAllDoctor()
+  public ResponseEntity<Map<Integer, Doctor>> getAllPatientsUnderAllDoctor()
       throws SystemException, BusinessException {
     LOGGER.traceEntry("Getting all Patients under all Doctors");
-    List<Doctor> doctorList = service.getAllPatientsUnderAllDoctors();
+    Map<Integer, Doctor> doctorList = service.getAllPatientsUnderAllDoctors();
     LOGGER.traceExit(doctorList.toString());
     return ResponseEntity.status(HttpStatus.OK).body(doctorList);
 
   }
+
+  //  @GetMapping("/getUser/{userId}")
+  //  public ResponseEntity<User> getUser(@ PathVariable int userId){
+  //    User user=mapper.getUser(userId);
+  //    return ResponseEntity.status(HttpStatus.OK).body(user);
+  //  }
 }

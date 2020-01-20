@@ -9,6 +9,7 @@ import java.util.List;
  *
  */
 public class Doctor extends User {
+
   private String doctorSpecialization;
   private int doctorExperience;
   private List<Patient> patientList;
@@ -65,5 +66,15 @@ public class Doctor extends User {
    */
   public void setDoctorExperience(int doctorExperience) {
     this.doctorExperience = doctorExperience;
+  }
+
+  /**
+   * method to convert doctor into string.
+   *
+   */
+  @ Override
+  public String toString() {
+    return "Doctor [doctorSpecialization=" + doctorSpecialization
+        + ", doctorExperience=" + doctorExperience + ", patientList=" + patientList + "]";
   }
 }

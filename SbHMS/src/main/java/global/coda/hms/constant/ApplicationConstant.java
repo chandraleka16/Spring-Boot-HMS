@@ -14,11 +14,11 @@ public class ApplicationConstant {
       + "user_address_line2, " + "user_address_line3, fk_role_id) VALUES (#{userName}, "
       + "#{userPassword}, #{userAge}, #{userGender}, #{userMobileNumber}, "
       + "#{userEmailId}, #{userAddressLine1}, #{userAddressLine2}, #{userAddressLine3}, 4)";
-  public static final String HMSUU001 = "UPDATE t_user SET user_name = #{userName}, "
-      + "user_password=#{userPassword}, user_age=#{userAge}, user_gender=#{userGender}, "
-      + "user_mobile_number=#{userMobileNumber}, user_email_id=#{userEmailId}, "
-      + "user_address_line1=#{userAddressLine1}, user_address_line2=#{userAddressLine2}, "
-      + "user_address_line3 = #{userAddressLine3} WHERE pk_user_id = #{userId}";
+  public static final String HMSUU001 = "<script>UPDATE t_user SET <if test='userName!=null'>user_name = #{userName}</if> "
+      + "<if test='userPassword!=null'>,user_password=#{userPassword}</if> <if test='userAge!=null'>,user_age=#{userAge}</if><if test='userGender!=null'>,user_gender=#{userGender}</if> "
+      + "<if test='userMobileNumber!=null'>,user_mobile_number=#{userMobileNumber}</if> <if test='userEmailId!=null'>,user_email_id=#{userEmailId}</if> "
+      + "<if test='userAddressLine1!=null'>,user_address_line1=#{userAddressLine1}</if> <if test='userAddressLine2!=null'>,user_address_line2=#{userAddressLine2}</if> "
+      + "<if test='userAddressLine2!=null'>,user_address_line3 = #{userAddressLine3}</if> WHERE pk_user_id = #{userId}</script>";
 
   public static final String HMSPR001 = "SELECT pk_user_id as user_id,user_name,user_password, "
       + "user_age, user_gender, user_mobile_number, user_email_id, "
@@ -35,16 +35,16 @@ public class ApplicationConstant {
   public static final String HMSPD001 = "UPDATE t_user SET is_delete = 1 "
       + "WHERE pk_user_id = #{userId} AND is_delete= 0";
 
-  public static final String HMSDAR001 = "SELECT pk_user_id as user_id,user_name,"
+  public static final String HMSDAR001 = "SELECT pk_user_id,user_name,"
       + "user_password, user_age, user_gender, user_mobile_number, user_email_id, "
       + "user_address_line1, user_address_line2, user_address_line3,fk_role_id as user_role_id, "
       + "doctor_specialization, doctor_experience FROM t_user JOIN t_doctor ON "
       + "t_user.pk_user_id=t_doctor.fk_user_id WHERE t_user.is_delete=0";
-  public static final String HMSDR001 = "SELECT pk_user_id,user_name,user_password, user_age, "
+  public static final String HMSDR001 = "<script>SELECT pk_user_id,user_name,user_password, user_age, "
       + "user_gender, user_mobile_number, user_email_id, user_address_line1, user_address_line2, "
       + "user_address_line3,fk_role_id, doctor_specialization, doctor_experience "
       + "FROM t_user JOIN t_doctor ON t_user.pk_user_id=t_doctor.fk_user_id WHERE "
-      + "t_user.is_delete=0 and t_user.pk_user_id=#{userId}";
+      + "t_user.is_delete=0<if test='userId!=0'> and t_user.pk_user_id=#{userId}</if><if test='userId==0'>;</if></script>";
   public static final String HMSDC001 = "INSERT INTO t_doctor (fk_user_id,doctor_specialization,"
       + "doctor_experience) VALUES (#{userId},#{doctorSpecialization},#{doctorExperience})";
   public static final String HMSDD001 = "UPDATE t_doctor SET is_delete = 1 "

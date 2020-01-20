@@ -8,10 +8,11 @@ package global.coda.hms.model;
  */
 public class Patient extends User {
 
-  /**method to convert the patient bean to string.
+  /**
+   * method to convert the patient bean to string.
    *
    */
-  @Override
+  @ Override
   public String toString() {
     return "Patient [patientDisease=" + patientDisease + "]";
   }

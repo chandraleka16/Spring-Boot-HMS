@@ -1,8 +1,11 @@
 package global.coda.hms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
@@ -22,6 +25,8 @@ import global.coda.hms.model.Patient;
  */
 @ Mapper
 public interface DoctorMapper {
+  Patient patient = null;
+  Doctor doctor = null;
 
   /**
    * method to get doctor details from db.
@@ -43,19 +48,32 @@ public interface DoctorMapper {
     @ Result(property = "userAddressLine3", column = "user_address_line3"),
     @ Result(property = "patientDisease", column = "patient_disease"),
     @ Result(property = "doctorSpecialization", column = "doctor_specialization"),
-    @ Result(property = "doctorExperience", column = "doctor_experience"),
-    @ Result(property = "doctorPatientMappingId", column = "doctor_patient_key"),
-    @ Result(property = "doctorId", column = "fk_doctor_id"),
-    @ Result(property = "patientId", column = "fk_patient_id") })
+    @ Result(property = "doctorExperience", column = "doctor_experience") })
 
-  @ Select(ApplicationConstant.HMSDR001)
-  Doctor getDoctor(int userId);
+  @ Select({ ApplicationConstant.HMSDR001 })
+  List<Doctor> getDoctor(int userId);
 
   /**
    * method to read all doctors in db.
    *
    * @return list of doctors
    */
+  @ Results({ @ Result(property = "userId", column = "pk_user_id"),
+    @ Result(property = "userRoleId", column = "fk_role_id"),
+    @ Result(property = "userId", column = "fk_user_id"),
+    @ Result(property = "userName", column = "user_name"),
+    @ Result(property = "userPassword", column = "user_password"),
+    @ Result(property = "userAge", column = "user_age"),
+    @ Result(property = "userGender", column = "user_gender"),
+    @ Result(property = "userMobileNumber", column = "user_mobile_number"),
+    @ Result(property = "userEmailId", column = "user_email_id"),
+    @ Result(property = "userAddressLine1", column = "user_address_line1"),
+    @ Result(property = "userAddressLine2", column = "user_address_line2"),
+    @ Result(property = "userAddressLine3", column = "user_address_line3"),
+    @ Result(property = "patientDisease", column = "patient_disease"),
+    @ Result(property = "doctorSpecialization", column = "doctor_specialization"),
+    @ Result(property = "doctorExperience", column = "doctor_experience") })
+
   @ Select(ApplicationConstant.HMSDAR001)
   List<Doctor> getAllDoctors();
 
@@ -69,12 +87,12 @@ public interface DoctorMapper {
   int deleteDoctor(int userId);
 
   /**
-   * method to update doctor details
+   * method to update doctor details.
    *
    * @param doctor to update
    * @return number of rows affected
    */
-  @ Update(ApplicationConstant.HMSUU001)
+  @ Update({ApplicationConstant.HMSUU001})
   int updateDoctor(Doctor doctor);
 
   /**
@@ -102,6 +120,19 @@ public interface DoctorMapper {
    * @param userId to get all patients
    * @return list of patients
    */
+  @ Results({ @ Result(property = "userId", column = "pk_user_id"),
+    @ Result(property = "userRoleId", column = "fk_role_id"),
+    @ Result(property = "userId", column = "fk_user_id"),
+    @ Result(property = "userName", column = "user_name"),
+    @ Result(property = "userPassword", column = "user_password"),
+    @ Result(property = "userAge", column = "user_age"),
+    @ Result(property = "userGender", column = "user_gender"),
+    @ Result(property = "userMobileNumber", column = "user_mobile_number"),
+    @ Result(property = "userEmailId", column = "user_email_id"),
+    @ Result(property = "userAddressLine1", column = "user_address_line1"),
+    @ Result(property = "userAddressLine2", column = "user_address_line2"),
+    @ Result(property = "userAddressLine3", column = "user_address_line3"),
+    @ Result(property = "patientDisease", column = "patient_disease") })
   @ Select(ApplicationConstant.HMSPUD001)
   List<Patient> getPatientsUnderDoctor(int userId);
 
@@ -110,7 +141,25 @@ public interface DoctorMapper {
    *
    * @return list of doctors
    */
-  @ Select(ApplicationConstant.HMSPUD002)
-  List<Doctor> getAllPatientsUnderAllDoctors();
+  @ Select(ApplicationConstant.HMSDAR001)
+  @ Results({ @ Result(property = "userId", column = "pk_user_id"),
+    @ Result(property = "userRoleId", column = "fk_role_id"),
+    @ Result(property = "userId", column = "fk_user_id"),
+    @ Result(property = "userName", column = "user_name"),
+    @ Result(property = "userPassword", column = "user_password"),
+    @ Result(property = "userAge", column = "user_age"),
+    @ Result(property = "userGender", column = "user_gender"),
+    @ Result(property = "userMobileNumber", column = "user_mobile_number"),
+    @ Result(property = "userEmailId", column = "user_email_id"),
+    @ Result(property = "userAddressLine1", column = "user_address_line1"),
+    @ Result(property = "userAddressLine2", column = "user_address_line2"),
+    @ Result(property = "userAddressLine3", column = "user_address_line3"),
+    @ Result(property = "patientDisease", column = "patient_disease"),
+    @ Result(property = "doctorSpecialization", column = "doctor_specialization"),
+    @ Result(property = "doctorExperience", column = "doctor_experience"),
+    @ Result(property = "patientList", column = "pk_user_id", javaType = List.class, many = @ Many(select = "getPatientsUnderDoctor")) })
+  @ MapKey("userId")
+  Map<Integer, Doctor> getAllPatientsUnderAllDoctors();
+
 
 }
