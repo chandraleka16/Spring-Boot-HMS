@@ -14,7 +14,7 @@
 		<Root level="INFO">
 			<AppenderRef ref="STDOUT" />
 		</Root>
-		<Logger name="global.coda" level="TRACE" additivity="false">
+		<Logger name="global.coda.hms" level="TRACE" additivity="false">
 			<AppenderRef ref="STDOUT" />
 		</Logger>
 	</Loggers>

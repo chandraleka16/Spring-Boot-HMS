@@ -37,17 +37,37 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+	implementation 'org.flywaydb:flyway-core'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-		
-	// Logger
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
 	
+    //for JWT
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+//compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.6.RELEASE'
+
+//json object
+	//https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	//LOg4j2
+	compile('org.springframework.boot:spring-boot-starter-log4j2')
 	
+	//junit
+	// https://mvnrepository.com/artifact/junit/junit
+testCompile group: 'junit', name: 'junit', version: '4.12'
+	
+
 	}
 }
 
+configurations {
+    all {
+          exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+      }
+}
 test {
 	useJUnitPlatform()
 }
