@@ -27,16 +27,41 @@ public class TestPatientController {
       MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(),
       Charset.forName("utf8"));
 
+  /**
+   * test method to read all patients.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void readAllPatientsTest() throws Exception {
     this.mockMvc.perform(get("/patients/allPatients")).andExpect(status().isOk());
   }
 
+  /**
+   * test method to read patient using id.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
-  public void deletePatientRecordTest() throws Exception {
-    this.mockMvc.perform(put("/patients/deletePatient/15")).andExpect(status().isOk());
+  public void readPatientTest() throws Exception {
+    this.mockMvc.perform(get("/doctors/readPatient/9")).andExpect(status().isOk());
   }
 
+  /**
+   * test method to delete patient.
+   * 
+   * @throws Exception when there is any system error
+   */
+  @ Test
+  public void deletePatientRecordTest() throws Exception {
+    this.mockMvc.perform(put("/patients/deletePatient/9")).andExpect(status().isOk());
+  }
+
+  /**
+   * test method to create a new patient in db.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void createPatientTest() throws Exception {
     Patient patient = new Patient();
@@ -59,6 +84,11 @@ public class TestPatientController {
         .andExpect(status().isOk());
   }
 
+  /**
+   * test method to update patient details.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void updatePatientTest() throws Exception {
     Patient patient = new Patient();

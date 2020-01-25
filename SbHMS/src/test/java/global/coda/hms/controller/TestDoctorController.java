@@ -31,16 +31,41 @@ public class TestDoctorController {
       MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(),
       Charset.forName("utf8"));
 
+  /**
+   * test method to read all doctors.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void readAllDoctorsTest() throws Exception {
     this.mockMvc.perform(get("/doctors/readAllDoctors")).andExpect(status().isOk());
   }
 
+  /**
+   * test method to read doctor using id.
+   * 
+   * @throws Exception when there is any system error
+   */
+  @ Test
+  public void readDoctorTest() throws Exception {
+    this.mockMvc.perform(get("/doctors/readDoctors/4")).andExpect(status().isOk());
+  }
+
+  /**
+   * test method to to delete a doctor.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void deleteDoctorTest() throws Exception {
     this.mockMvc.perform(put("/doctors/deleteDoctor/5")).andExpect(status().isOk());
   }
 
+  /**
+   * test method to to create a new doctor in db.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void createDoctorTest() throws Exception {
     Doctor doctor = new Doctor();
@@ -65,6 +90,11 @@ public class TestDoctorController {
         .andExpect(status().isOk());
   }
 
+  /**
+   * test method to update a doctor details.
+   * 
+   * @throws Exception when there is any system error
+   */
   @ Test
   public void updateDoctorTest() throws Exception {
     Doctor doctor = new Doctor();
@@ -89,4 +119,25 @@ public class TestDoctorController {
             put("/doctors/updateDoctor").contentType(APPLICATION_JSON_UTF8).content(requestJson))
         .andExpect(status().isOk());
   }
+
+  /**
+   * test method to read all patients under all doctors.
+   * 
+   * @throws Exception when there is any system error
+   */
+  @ Test
+  public void readPatientsUnderDoctorsTest() throws Exception {
+    this.mockMvc.perform(get("/doctors/patientsUnderAllDoctors")).andExpect(status().isOk());
+  }
+
+  /**
+   * test method to read all patients under a doctor.
+   * 
+   * @throws Exception when there is any system error
+   */
+  @ Test
+  public void readPatientsUnderDoctorTest() throws Exception {
+    this.mockMvc.perform(get("/doctors/patientsUnderDoctor/4")).andExpect(status().isOk());
+  }
+
 }
