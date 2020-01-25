@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +34,9 @@ import global.coda.hms.service.DoctorService;
  * @author Chandraleka
  *
  */
+@CrossOrigin
 @ RestController
-@ RequestMapping("/doctor")
+@ RequestMapping("/doctors")
 public class DoctorController {
   private static final Logger LOGGER = LogManager.getLogger(PatientController.class);
   private DoctorService service;
